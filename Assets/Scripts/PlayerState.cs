@@ -6,28 +6,35 @@ public class PlayerState
 {
      protected PlayerStateMachine _stateMachine;
 
-    protected Player _player;
+    protected Player player;
+
+    protected Rigidbody2D rb;
+    protected float xInput;
 
     private string _animBoolName;
     
-    public PlayerState(PlayerStateMachine stateMachine, Player player, string animBoolName)
+    protected PlayerState(PlayerStateMachine stateMachine, Player player, string animBoolName)
     {
         _stateMachine = stateMachine;
-        _player = player;
+        this.player = player;
         _animBoolName = animBoolName;
     }
 
     public virtual void Enter()
     {
-        _player.anim.SetBool(_animBoolName, true);
+        player.anim.SetBool(_animBoolName, true);
+
+        rb = player.rb;
     }
 
     public virtual void Update()
     {
+        xInput = Input.GetAxis("Horizontal"); 
     }
 
     public virtual void Exit()
     {
-        _player.anim.SetBool(_animBoolName, false);
+        player.anim.SetBool(_animBoolName, false);
     }
+
 }

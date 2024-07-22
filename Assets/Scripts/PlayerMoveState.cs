@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMoveState : PlayerState
+public class PlayerMoveState : PlayerGroundState
 {
     public PlayerMoveState(PlayerStateMachine stateMachine, Player player, string animBoolName) : base(stateMachine, player, animBoolName)
     {
@@ -16,6 +14,13 @@ public class PlayerMoveState : PlayerState
     public override void Update()
     {
         base.Update();
+        
+        player.SetVelocity(xInput * player.moveSpeed, rb.velocity.y);
+
+        if (xInput == 0)
+        {
+            player.stateMachine.ChangeState(player.idleState);
+        }
     }
 
     public override void Exit()

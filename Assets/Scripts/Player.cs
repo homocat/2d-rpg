@@ -5,11 +5,23 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public Animator anim;
+    [Header("Move info")]
+    [SerializeField] public float moveSpeed = 12f;
     
+    #region componens
+
+    public Animator anim;
+
+
+    public Rigidbody2D rb;
+    
+    #endregion
+
+    #region States 
     public PlayerStateMachine stateMachine { get; private set; }
     public PlayerIdelState idleState { get; private set; }
-    public PlayerMoveState moveState { get; private set; }
+    public PlayerMoveState moveState { get; private set; } 
+    #endregion
 
     private void Awake()
     {
@@ -22,13 +34,22 @@ public class Player : MonoBehaviour
     private void Start()
     {
         anim = GetComponentInChildren<Animator>();
-        
+        rb = GetComponent<Rigidbody2D>();
+
         stateMachine.Initialize(idleState);
     }
 
     private void Update()
     {
-        stateMachine.currentState.Update();
         
+        stateMachine.currentState.Update();
+        Debug.Log(stateMachine.currentState);
+
+    }
+
+
+    public void SetVelocity(float _xVelocity, float _yVelocity)
+    {
+        rb.velocity = new Vector2(_xVelocity, _yVelocity);
     }
 }
