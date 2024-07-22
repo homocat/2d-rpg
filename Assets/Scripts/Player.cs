@@ -15,7 +15,11 @@ public class Player : MonoBehaviour
     [SerializeField] public Transform wallCheck;
     [SerializeField] public float wallCheckDistance;
     [SerializeField] public LayerMask whatIsGround;
-    
+
+    public int facingDir { get; private set; } = 1;
+    private bool facingRight = true;
+    public float _x;
+        
     #region componens
 
     public Animator anim;
@@ -47,6 +51,7 @@ public class Player : MonoBehaviour
     {
         anim = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody2D>();
+        _x = rb.velocity.x;
 
         stateMachine.Initialize(idleState);
     }
@@ -56,6 +61,8 @@ public class Player : MonoBehaviour
         
         stateMachine.currentState.Update();
         Debug.Log(stateMachine.currentState);
+        
+        FlipController();
 
     }
 
@@ -72,5 +79,23 @@ public class Player : MonoBehaviour
     {
         Gizmos.DrawLine(groundCheck.position, new Vector3(groundCheck.position.x, groundCheck.position.y - groundCheckDistance));
         Gizmos.DrawLine(wallCheck.position, new Vector3(wallCheck.position.x + wallCheckDistance, wallCheck.position.y));
+    }
+
+    public void Flip()
+    {
+        facingDir = facingDir * -1;
+        facingRight = !facingRight;
+        transform.Rotate(0, 180, 0);
+    }
+
+    public void FlipController()
+    {
+        if (facingRight && _x < 0)
+        {
+           Flip(); 
+        } else if (!facingRight && _x > 0)
+        {
+           Flip(); 
+        }
     }
 }
