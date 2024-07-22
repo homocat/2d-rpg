@@ -17,7 +17,7 @@ public class PlayerGroundState : PlayerState
     {
         base.Update();
 
-        if (Input.GetKeyDown(KeyCode.K))
+        if (Input.GetKeyDown(KeyCode.K) && player.IsGroundDetected())
         {
            _stateMachine.ChangeState(player.jumpState); 
         }
