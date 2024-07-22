@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerGroundState : PlayerState
+public class PlayerAirState : PlayerState
 {
-    protected PlayerGroundState(PlayerStateMachine stateMachine, Player player, string animBoolName) : base(stateMachine, player, animBoolName)
+    public PlayerAirState(PlayerStateMachine stateMachine, Player player, string animBoolName) : base(stateMachine, player, animBoolName)
     {
     }
 
@@ -17,14 +17,15 @@ public class PlayerGroundState : PlayerState
     {
         base.Update();
 
-        if (Input.GetKeyDown(KeyCode.K))
+        if (rb.velocity.y == 0)
         {
-           _stateMachine.ChangeState(player.jumpState); 
+           _stateMachine.ChangeState(player.idleState); 
         }
     }
 
     public override void Exit()
     {
         base.Exit();
+
     }
 }
