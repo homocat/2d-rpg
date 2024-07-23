@@ -17,14 +17,24 @@ public class PlayerGroundState : PlayerState
     {
         base.Update();
 
+        DashController();
+        
         if (Input.GetKeyDown(KeyCode.K) && player.IsGroundDetected())
         {
-           _stateMachine.ChangeState(player.jumpState); 
+           stateMachine.ChangeState(player.jumpState); 
         }
     }
 
     public override void Exit()
     {
         base.Exit();
+    }
+
+    private void DashController()
+    {
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            stateMachine.ChangeState(player.dashState); 
+        }
     }
 }

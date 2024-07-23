@@ -8,6 +8,8 @@ public class Player : MonoBehaviour
     [Header("Move info")]
     [SerializeField] public float moveSpeed = 12f;
     [SerializeField] public float jumpForce = 12f;
+    [SerializeField] public float dashSpeed;
+    [SerializeField] public float dashDuration;
 
     [Header("Collision info")] 
     [SerializeField] public Transform groundCheck; 
@@ -35,6 +37,7 @@ public class Player : MonoBehaviour
     public PlayerMoveState moveState { get; private set; } 
     public PlayerJumpState jumpState { get; private set; }
     public PlayerAirState airState { get; private set; }
+    public PlayerDashState dashState { get; private set; }
     #endregion
 
     private void Awake()
@@ -45,25 +48,23 @@ public class Player : MonoBehaviour
         moveState = new PlayerMoveState(stateMachine, this, "Move");
         jumpState = new PlayerJumpState(stateMachine, this, "Jump");
         airState = new PlayerAirState(stateMachine, this, "Jump");
+        dashState = new PlayerDashState(stateMachine, this, "Dash");
     }
 
     private void Start()
     {
         anim = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody2D>();
-        _x = rb.velocity.x;
 
         stateMachine.Initialize(idleState);
     }
 
     private void Update()
-    {
-        
+    { 
+        _x = rb.velocity.x;
         stateMachine.currentState.Update();
-        Debug.Log(stateMachine.currentState);
         
-        FlipController();
-
+        FlipController(); 
     }
 
 

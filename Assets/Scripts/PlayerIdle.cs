@@ -19,7 +19,7 @@ public class PlayerIdelState : PlayerGroundState
 
         if (xInput != 0)
         {
-           _stateMachine.ChangeState(player.moveState); 
+           stateMachine.ChangeState(player.moveState); 
         }
     }
 

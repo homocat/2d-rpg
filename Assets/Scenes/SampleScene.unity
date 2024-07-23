@@ -164,7 +164,7 @@ GameObject:
   - component: {fileID: 517908241}
   - component: {fileID: 517908240}
   - component: {fileID: 517908239}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -517,12 +517,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60e8d38dc6a3bc84bb623b32e4188f2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 2.36
+  moveSpeed: 5.46
   jumpForce: 12
   groundCheck: {fileID: 1302504308}
   groundCheckDistance: 1.6
   wallCheck: {fileID: 727485240}
   wallCheckDistance: 1.58
+  whatIsGround:
+    serializedVersion: 2
+    m_Bits: 8
+  _x: 0
   anim: {fileID: 0}
   rb: {fileID: 0}
 --- !u!1 &1216607315

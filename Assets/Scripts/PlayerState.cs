@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerState 
 {
-     protected PlayerStateMachine _stateMachine;
+     protected PlayerStateMachine stateMachine;
 
     protected Player player;
 
@@ -12,10 +12,12 @@ public class PlayerState
     protected float xInput;
 
     private string _animBoolName;
+
+    protected float stateTimer;
     
     protected PlayerState(PlayerStateMachine stateMachine, Player player, string animBoolName)
     {
-        _stateMachine = stateMachine;
+        this.stateMachine = stateMachine;
         this.player = player;
         _animBoolName = animBoolName;
     }
@@ -30,6 +32,7 @@ public class PlayerState
     public virtual void Update()
     {
         xInput = Input.GetAxis("Horizontal"); 
+        stateTimer -= Time.deltaTime;
         
         player.anim.SetFloat("yVelocity", rb.velocity.y);
     }
