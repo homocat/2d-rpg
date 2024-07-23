@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -8,8 +9,14 @@ public class Player : MonoBehaviour
     [Header("Move info")]
     [SerializeField] public float moveSpeed = 12f;
     [SerializeField] public float jumpForce = 12f;
-    [SerializeField] public float dashSpeed;
-    [SerializeField] public float dashDuration;
+
+    [Header("Dash info")] 
+    [SerializeField] public float dashCooldown;
+
+    public float dashUsageTimer;
+    public float dashSpeed;
+    public float dashDuration;
+    public float dashDir { get; private set; }
 
     [Header("Collision info")] 
     [SerializeField] public Transform groundCheck; 
@@ -65,8 +72,26 @@ public class Player : MonoBehaviour
         stateMachine.currentState.Update();
         
         FlipController(); 
+
+        CheckDashInput();
     }
 
+    private void CheckDashInput()
+    {
+        dashUsageTimer -= Time.deltaTime;
+
+        if (Input.GetKeyDown(KeyCode.L) && dashUsageTimer < 0)
+        {
+            dashUsageTimer = dashCooldown;
+            dashDir = Input.GetAxisRaw("Horizontal");
+            dashDir = Math.Sign(dashDir);
+            
+            if (dashDir == 0)
+                dashDir = facingDir;
+
+            stateMachine.ChangeState(dashState);
+        }
+    }
 
     public void SetVelocity(float _xVelocity, float _yVelocity)
     {
